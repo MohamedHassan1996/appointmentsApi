@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Auth\AuthLogoutController;
 use App\Http\Controllers\Api\V1\Auth\ForgetPasswordOtpController;
 use App\Http\Controllers\Api\V1\Otp\OtpController;
 use App\Http\Controllers\Api\V1\Select\SelectController;
+use App\Http\Controllers\Api\V1\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['checkLocale'])->prefix('v1/{locale}')->group(function () {
@@ -22,8 +23,12 @@ Route::middleware(['checkLocale'])->prefix('v1/{locale}')->group(function () {
         Route::get('verify', [OtpController::class, 'verify']);
     });
 
-    Route::prefix('selects')->group(function(){
-        Route::get('', [SelectController::class, 'getSelects']);
+    Route::prefix('users')->group(function () {
+        Route::get('', [UserController::class, 'index']);
+        Route::post('', [UserController::class, 'store']);
+        Route::get('{user}', [UserController::class, 'show']);
+        Route::put('{user}', [UserController::class, 'update']);
+        Route::delete('{user}', [UserController::class, 'destroy']);
     });
 
 
